@@ -1,8 +1,6 @@
-import Vue from 'vue'
-import App from './App.vue'
+import importHTMLWithEvalCache from './with-eval-code';
 
-Vue.config.productionTip = false
-
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+importHTMLWithEvalCache('./subApp/index.html')
+    .then(res => {
+        res.execScripts()
+});

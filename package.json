@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "import-html-entry": "^1.11.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {

@@ -1,8 +1,12 @@
 <template>
   <div id="app">
     <button @click="loadApp">loadApp</button>
+    <button @click="loadApp100">loadApp 100 times</button>
     <div>{{ count1 }}</div>
     <button @click="loadAppWithEvalCache">loadAppWithEvalCache</button>
+    <button @click="loadAppWithEvalCache100">
+      loadAppWithEvalCache 100 times
+    </button>
     <div>{{ count2 }}</div>
   </div>
 </template>
@@ -21,25 +25,36 @@ export default {
     };
   },
   methods: {
-    loadApp() {
+    async loadApp() {
       console.time("loadApp");
-      importHTML("./subApp/index.html").then((res) => {
-        res.execScripts({}).then((exports) => {
-          this.set1.add(exports);
-          this.count1 = this.set1.size;
-          console.timeEnd("loadApp");
-        });
-      });
+      const res = await importHTML("./subApp/index.html");
+      const exports = await res.execScripts({});
+      this.set1.add(exports);
+      this.count1 = this.set1.size;
+      console.timeEnd("loadApp");
     },
-    loadAppWithEvalCache() {
+    async loadAppWithEvalCache() {
       console.time("loadAppWithEvalCache");
-      importHTMLWithEvalCache("./subApp/index.html").then((res) => {
-        res.execScripts({}).then((exports) => {
-          this.set2.add(exports);
-          this.count2 = this.set2.size;
-          console.timeEnd("loadAppWithEvalCache");
-        });
-      });
+      const res = await importHTMLWithEvalCache("./subApp/index.html");
+      const exports = await res.execScripts({});
+      this.set2.add(exports);
+      this.count2 = this.set2.size;
+      console.timeEnd("loadAppWithEvalCache");
+    },
+    async loadApp100() {
+      console.time("loadApp 100 times");
+      for (let i = 0; i < 100; i++) {
+        await this.loadApp();
+      }
+      console.timeEnd("loadApp 100 times");
+    },
+    async loadAppWithEvalCache100() {
+      console.time("loadAppWithEvalCache 100 times");
+
+      for (let i = 0; i < 100; i++) {
+        await this.loadAppWithEvalCache();
+      }
+      console.timeEnd("loadAppWithEvalCache 100 times");
     },
   },
 };

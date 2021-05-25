@@ -22,22 +22,22 @@ export default {
   },
   methods: {
     loadApp() {
-      console.time("subApp1");
+      console.time("loadApp");
       importHTML("./subApp/index.html").then((res) => {
         res.execScripts({}).then((exports) => {
           this.set1.add(exports);
           this.count1 = this.set1.size;
-          console.timeEnd("subApp1");
+          console.timeEnd("loadApp");
         });
       });
     },
     loadAppWithEvalCache() {
-      console.time("subApp2");
+      console.time("loadAppWithEvalCache");
       importHTMLWithEvalCache("./subApp/index.html").then((res) => {
         res.execScripts({}).then((exports) => {
           this.set2.add(exports);
           this.count2 = this.set2.size;
-          console.timeEnd("subApp2");
+          console.timeEnd("loadAppWithEvalCache");
         });
       });
     },

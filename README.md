@@ -2,6 +2,10 @@
 
 ## Project setup
 ```
+cd import-html-entry-test
+```
+
+```
 npm install
 ```
 
